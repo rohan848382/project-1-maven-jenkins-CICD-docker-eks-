@@ -20,7 +20,7 @@
 #--------------------taking maven on ubuntu and tomacate image ------------------
 # FROM ubuntu:latest as builder
 # RUN apt-get update && \
-#     apt-get install -y openjdk-8-jdk wget unzip
+#     apt-get install -y openjdk-17-jdk wget unzip
 
 # ARG MAVEN_VERSION=3.9.6
 # RUN wget https://dlcdn.apache.org/maven/maven-3/3.9.6/binaries/apache-maven-3.9.6-bin.tar.gz && \
@@ -51,9 +51,9 @@ FROM ubuntu:20.04 AS build
 # Set non-interactive mode for installing packages
 ENV DEBIAN_FRONTEND=noninteractive
 
-# Install necessary packages: OpenJDK 11, Maven, and other utilities
+# Install necessary packages: OpenJDK 17, Maven, and other utilities
 RUN apt-get update && apt-get install -y \
-    openjdk-11-jdk \
+    openjdk-17-jdk \
     maven \
     wget \
     curl \
@@ -61,7 +61,7 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Set JAVA_HOME environment variable
-ENV JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
+ENV JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
 
 # Set the working directory in the container
 WORKDIR /app
@@ -82,17 +82,17 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 # Install necessary packages
 RUN apt-get update && apt-get install -y \
-    openjdk-11-jdk \
+    openjdk-17-jdk \
     wget \
     curl \
     && rm -rf /var/lib/apt/lists/*
 
 # Set the Java environment variables
-ENV JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
+ENV JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
 ENV PATH=$JAVA_HOME/bin:$PATH
 
 # Download and extract Tomcat (correcting the download and extraction paths)
-RUN wget https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.93/bin/apache-tomcat-9.0.93.tar.gz -O /tmp/tomcat.tar.gz && \
+RUN wget https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.95/bin/apache-tomcat-9.0.95.tar.gz -O /tmp/tomcat.tar.gz && \
     mkdir /opt/tomcat && \
     tar xzvf /tmp/tomcat.tar.gz -C /opt/tomcat --strip-components=1 && \
     rm /tmp/tomcat.tar.gz
