@@ -46,7 +46,7 @@
 #----------------maven and tomcate on ubuntu ------------------------
 
 # Use the official Ubuntu image as the base image for building the Maven project
-FROM ubuntu:20.04 AS build
+FROM ubuntu:latest AS build
 
 # Set non-interactive mode for installing packages
 ENV DEBIAN_FRONTEND=noninteractive
@@ -75,7 +75,7 @@ RUN mvn clean package
 # Debug: List the contents of the target directory to confirm the WAR file
 RUN ls -al /app/webapp/target
 # Use the official Ubuntu image as the base for the runtime environment
-FROM ubuntu:20.04
+FROM ubuntu:latest
 
 # Set environment variables
 ENV DEBIAN_FRONTEND=noninteractive
@@ -108,4 +108,3 @@ EXPOSE 8080
 COPY --from=build /app/webapp/target/webapp.war /opt/tomcat/webapps/webapp.war
 # Start Tomcat
 CMD ["/opt/tomcat/bin/catalina.sh", "run"]
-
